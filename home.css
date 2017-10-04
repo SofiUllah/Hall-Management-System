@@ -1,0 +1,8 @@
+*{margin:0;padding:0}
+body{}
+.container  li ul {
+display:none	;
+}
+.container ul li a{
+	display:block;
+}

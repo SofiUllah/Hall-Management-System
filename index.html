@@ -1,0 +1,94 @@
+<html>
+<head>
+<script>
+$(document).ready(function(){
+	var req = null;
+	$('#keysearch').on('keyup', function(){
+		var key = $('#keysearch').val();
+		if (key && key.length > 2)
+		{
+			$('#loading').css('display', 'block');
+			if (req)
+				req.abort();
+			req = $.ajax({
+				url : 'fetch_record.php',
+				type : 'POST',
+				cache : false,
+				data : {
+					keysearch : key,
+				},
+				success : function(data)
+				{
+					console.log(data)
+					if (data)
+					{
+						$('#loading').css('display', 'none');
+						$("#result").html(data).show();
+					}
+				}
+			});
+		}
+		else
+		{
+			$('#loading').css('display', 'none');
+			$('#result').css('display', 'none');
+		}
+ 
+	});
+});
+</script>
+</head>
+<body>
+ <?php
+ CREATE DATABASE test;
+CREATE TABLE `user_information` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `add_date` datetime NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+ 
+INSERT INTO `user_information` VALUES (1, 'PHP', 'php@demo.com', '2015-08-17 11:04:36');
+INSERT INTO `user_information` VALUES (2, 'MYSQL', 'mysql@demo.com', '2015-08-18 11:04:36');
+INSERT INTO `user_information` VALUES (3, 'JQUERY', 'jquery@demo.com', '2015-08-19 11:04:36');
+INSERT INTO `user_information` VALUES (4, 'AJAX', 'ajax@demo.com', '2015-08-20 11:04:36');
+INSERT INTO `user_information` VALUES (4, 'PHP5', 'php5@demo.com', '2015-08-21 11:04:36');
+INSERT INTO `user_information` VALUES (4, 'HTML5', 'html5@demo.com', '2015-08-22 11:04:36');
+?>
+ss
+	
+<?php
+    $conn = mysql_connect('localhost','test','root', '') or die(mysql_error());
+    $dbname = mysql_select_db('user_information') or die(mysql_error());
+?>
+<h1>Live search using jquery and mysql in php</h1>
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span>Live Search</span>
+			</div>
+			<div class="form-group">
+				<label for="username">Username :</label>
+				<input name="keysearch" value="" placeholder="name" id="keysearch" type="text" class="form-control">
+				<span id="loading">Loading...</span>
+			</div>
+			<div id="result"></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<?php
+include('dbconnection.php');
+if(isset($_POST['keysearch'])
+{
+    $search = $_POST['keysearch']);
+    $data = mysql_query("SELECT * FROM `user_information` WHERE `username` like '%$search%' order by id LIMIT 5");
+    while($row = mysql_fetch_array($data))
+    {
+        $username   = $row['name'];
+        echo "<div class='show'><img src='' id='search' /><span class="name"><?php echo $username; ?></span></div>"
+    }
+}
+?>

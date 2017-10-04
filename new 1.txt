@@ -1,0 +1,20 @@
+
+
+
+<?php
+   
+					  
+					        $sql="SELECT * FROM halldues WHERE username='$username'";
+							$rees=@mysql_query($sql,$con);
+									if($rees)
+									{
+										echo 'Go ';
+									}
+	  		               while($row = @mysql_fetch_assoc($rees)){
+							   
+							   echo 'OKK';
+							   
+		                     $prevdue=$row['PDues'];
+							  $totaldue=$row['TDues'];
+	                      }
+					?> 
